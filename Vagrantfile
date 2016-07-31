@@ -7,6 +7,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do | config |
   end
 	config.vm.define "controller" do | m |
 		m.vm.network :private_network, ip: "10.30.0.21"
+		m.vm.network :public_network,
+			use_dhcp_assigned_default_route: true
 		m.vm.hostname = "controller"
 	end
 

@@ -14,6 +14,7 @@ Ansible version 2.0.0.1
 ```
 git clone https://github.com/greatbn/openstack-ansible-install.git
 cd openstack-ansible-install
+git checkout virtualbox/mitaka
 ```
 
 - Create Infras

@@ -1,5 +1,9 @@
 auto lo
 iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
 auto {{ bridge_external_name }}
 iface {{ bridge_external_name }} inet static
 address {{ external_address_controller }}

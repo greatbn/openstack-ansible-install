@@ -1,0 +1,20 @@
+auto lo
+iface lo inet loopback
+auto {{ bridge_external_name }}
+iface {{ bridge_external_name }} inet static
+address {{ external_address_controller }}
+netmask {{ external_netmask_controller }}
+gateway {{ external_gateway_controller }}
+dns-nameservers {{ dns_server_address }}
+
+auto {{ external_interface_controller }}
+iface {{ external_interface_controller }} inet manual
+   up ifconfig $IFACE 0.0.0.0 up
+   up ip link set $IFACE promisc on
+   down ip link set $IFACE promisc off
+   down ifconfig $IFACE down
+
+auto {{ management_interface_controller }}
+iface {{ management_interface_controller }} inet static
+address {{ management_address_controller }}
+netmask {{ management_netmask_controller }}

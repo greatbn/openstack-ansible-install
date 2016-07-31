@@ -1,0 +1,6 @@
+---
+# handlers file for glance
+- name: restart glance-api service
+  service: name="glance-api" state=restarted
+- name: restart glance-registry service
+  service: name="glance-registry" state=restarted

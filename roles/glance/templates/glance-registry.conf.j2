@@ -1,0 +1,14 @@
+[DEFAULT]
+verbose = True
+[database]
+backend = sqlalchemy
+connection = mysql+pymysql://{{ glance_db_user}}:{{ glance_db_password}}@{{ controller_address}}/{{ glance_db_name}}
+[glance_store]
+[keystone_authtoken]
+[matchmaker_redis]
+[oslo_messaging_amqp]
+[oslo_messaging_notifications]
+[oslo_messaging_rabbit]
+[oslo_policy]
+[paste_deploy]
+[profiler]

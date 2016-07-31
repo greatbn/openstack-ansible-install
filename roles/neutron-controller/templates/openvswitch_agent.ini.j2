@@ -1,0 +1,9 @@
+[DEFAULT]
+[agent]
+tunnel_types = gre
+l2_population = True
+[ovs]
+local_ip = {{ compute_address }}
+bridge_mappings = external:{{ bridge_external_name }}
+[securitygroup]
+firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver

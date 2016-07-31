@@ -1,0 +1,34 @@
+[DEFAULT]
+[cors]
+[cors.subdomain]
+[database]
+backend = sqlalchemy
+connection = mysql+pymysql://{{ glance_db_user}}:{{ glance_db_password}}@{{ controller_address}}/{{ glance_db_name}}
+[glance_store]
+default_store = file
+stores = file,http
+filesystem_store_datadir = /var/lib/glance/images/
+[image_format]
+disk_formats = ami,ari,aki,vhd,vmdk,raw,qcow2,vdi,iso,root-tar
+[keystone_authtoken]
+auth_uri = http://{{ controller_address }}:5000
+auth_url = http://{{ controller_address }}:35357
+memcached_servers = {{ controller_address }}:11211
+auth_type = password
+project_domain_name = {{ user_domain_name }}
+user_domain_name = {{ user_domain_name }}
+project_name = {{ glance_service_project }}
+username = {{ glance_service_user }}
+password = {{ glance_service_password }}
+[matchmaker_redis]
+[oslo_concurrency]
+[oslo_messaging_amqp]
+[oslo_messaging_notifications]
+[oslo_messaging_rabbit]
+[oslo_policy]
+[paste_deploy]
+flavor = keystone
+[profiler]
+[store_type_location_strategy]
+[task]
+[taskflow_executor]

@@ -1,0 +1,31 @@
+[DEFAULT]
+core_plugin = ml2
+rpc_backend = rabbit
+auth_strategy = keystone
+[agent]
+root_helper = sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
+[cors]
+[cors.subdomain]
+[database]
+[keystone_authtoken]
+auth_uri = http://{{ controller_address }}:5000
+auth_url = http://{{ controller_address }}:35357
+memcached_servers = {{ controller_address }}:11211
+auth_type = password
+project_domain_name = {{ user_domain_name }}
+user_domain_name = {{ user_domain_name }}
+project_name = {{  service_project_name }}
+username = {{ neutron_service_user }}
+password = {{ neutron_service_password }}
+[matchmaker_redis]
+[nova]
+[oslo_concurrency]
+[oslo_messaging_amqp]
+[oslo_messaging_notifications]
+[oslo_messaging_rabbit]
+rabbit_host = {{ controller_address }}
+rabbit_userid = {{ rabbitmq_userid }}
+rabbit_password = {{ rabbitmq_password }}
+[oslo_policy]
+[quotas]
+[ssl]

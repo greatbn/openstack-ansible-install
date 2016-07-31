@@ -1,0 +1,29 @@
+---
+- name: Disable keystone auto start
+  copy: src="keystone.override" dest="/etc/init/keystone.override" mode=0644
+
+- name: Install keystone Package
+  apt: name="keystone" state="present"
+- name: Install Openstack Client
+  apt: name="python-openstackclient" state="present"
+- name: Remove sqlite db
+  file: path="/var/lib/keystone/keystone.db" state=absent
+
+- name: Configure keystone
+  template: src="keystone.conf.j2" dest="/etc/keystone/keystone.conf" mode=0644
+- name: Synchronize Database
+  command: su -s /bin/sh -c "keystone-manage db_sync" keystone
+- name: Init Fernet keys
+  command: keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+- name: Keystone bootstrap
+  command: |
+    keystone-manage bootstrap \
+    --bootstrap-password {{ keystone_admin_password }} \
+    --bootstrap-username {{ keystone_admin_user }} \
+    --bootstrap-project-name admin \
+    --bootstrap-role-name admin \
+    --bootstrap-service-name keystone \
+    --bootstrap-region-id RegionOne \
+    --bootstrap-admin-url http://{{ controller_address }}:35357/v3 \
+    --bootstrap-public-url http://{{ controller_address }}:5000/v3 \
+    --bootstrap-internal-url http://{{ controller_address }}:5000/v3

@@ -1,0 +1,6 @@
+---
+# tasks file for neutron
+- include: "database.yml"
+- include: "user_service.yml"
+- include: "neutron.yml"
+- include: "network.yml"

@@ -1,0 +1,9 @@
+---
+# tasks file for keystone
+- include: "database.yml"
+
+- include: "keystone.yml"
+
+- include: "apache.yml"
+
+- include: "service.yml"

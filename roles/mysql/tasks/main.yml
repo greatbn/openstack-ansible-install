@@ -1,0 +1,26 @@
+---
+- name: Install MySQL
+  apt: name={{ item }} state='present'
+  with_items:
+    - mariadb-server
+    - python-pymysql
+- name: host
+  debug: msg="{{ hostvars[groups['controller'][0]]['ansible_host'] }}"
+- name: Copy mysql config file
+  template: src="my.cnf.j2" dest="/etc/mysql/my.cnf" mode=0644
+- name: restart mysql
+  service: name="mysql" state=restarted
+- name: install python-mysqldb
+  apt: name="python-mysqldb" state="present"
+# - name: Change password for root
+#   mysql_user:
+#     login_user: root
+#     password: "{{ mysql_password_root }}"
+#     name: root
+#     password: "{{ mysql_password_root }}"
+#     priv: "*.*:ALL,GRANT"
+#     host: "{{ item }}"
+#   with_items:
+#     - 127.0.0.1
+#     - ::1
+#     - localhost

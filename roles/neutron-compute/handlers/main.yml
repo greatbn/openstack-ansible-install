@@ -1,0 +1,5 @@
+---
+- name: restart neutron-openvswitch-agent
+  service: name="neutron-openvswitch-agent" state=restarted
+- name: restart network
+  shell: ifdown -a && ifup -a

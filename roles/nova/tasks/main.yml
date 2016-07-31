@@ -1,0 +1,5 @@
+---
+# tasks file for nova
+- include: "database.yml"
+- include: "user_service.yml"
+- include: "nova.yml"

@@ -1,0 +1,5 @@
+---
+- name: Install Chrony
+  apt: name="chrony" state="present"
+  notify:
+    - restart ntp service

@@ -1,0 +1,5 @@
+---
+# tasks file for glance
+- include: "database.yml"
+- include: "user_service.yml"
+- include: "glance.yml"

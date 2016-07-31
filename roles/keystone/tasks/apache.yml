@@ -1,0 +1,14 @@
+---
+- name: Install apache2
+  apt: name={{ item }} state="present"
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+- name: Copy Config file apache
+  template: src="apache2.conf.j2" dest="/etc/apache2/apache2.conf" mode=0644
+- name: Copy config file keystone
+  template: src="wsgi-keystone.conf.j2" dest="/etc/apache2/sites-available/wsgi-keystone.conf" mode=0644
+- name: enable keystone
+  command: a2ensite wsgi-keystone
+- name: restart apache
+  service: name="apache2" state=restarted

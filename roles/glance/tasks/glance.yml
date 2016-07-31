@@ -1,0 +1,17 @@
+---
+- name: install glance-api and glance-registry
+  apt: name={{ item }} state=present
+  with_items:
+    - glance-api
+    - glance-registry
+- name: configure glance-api
+  template: src="glance-api.conf.j2" dest="/etc/glance/glance-api.conf" mode=0644
+  notify:
+    - restart glance-api service
+- name: configure glance-registry
+  template: src="glance-registry.conf.j2" dest="/etc/glance/glance-registry.conf" mode=0644
+  notify:
+    - restart glance-registry service
+- name: populate database for glance
+  command: su -s /bin/sh -c "glance-manage db_sync" glance
+  no_log: True

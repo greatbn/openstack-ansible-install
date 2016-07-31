@@ -1,0 +1,18 @@
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do | config |
+	config.vm.box = "ubuntu/trusty64"
+  config.vm.provider "virtualbox" do | vb |
+    vb.memory = 4096
+    vb.cpus =  2
+  end
+	config.vm.define "controller" do | m |
+		m.vm.network :private_network, ip: "10.30.0.21"
+		m.vm.hostname = "controller"
+	end
+
+	config.vm.define "compute" do | n1 |
+                n1.vm.network :private_network, ip: "10.30.0.22"
+                n1.vm.hostname = "compute-1"
+        end
+
+end

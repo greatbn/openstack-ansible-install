@@ -1,0 +1,11 @@
+- name: Create service project
+  keystone:
+    command: "ensure_project"
+    project_name: "{{ service_project_name }}"
+    domain_name: "{{ user_domain_name }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"

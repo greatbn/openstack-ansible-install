@@ -1,0 +1,10 @@
+auto lo
+iface lo inet loopback
+auto {{ management_interface_compute }}
+iface {{ management_interface_compute }} inet static
+address {{ management_address_compute }}
+netmask {{ management_netmask_compute }}
+
+auto {{ external_interface_compute  }}
+iface {{ external_interface_compute }} inet dhcp
+dns-nameservers {{ dns_server_address }}

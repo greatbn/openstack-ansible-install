@@ -1,0 +1,8 @@
+---
+- name: configure network
+  template: src="interfaces.j2" dest="/etc/network/interfaces" mode=0644
+  notify:
+    - restart network
+- name: Wait for network ok
+  sudo: false
+  local_action: wait_for host={{ ansible_host }} port=22 state=started

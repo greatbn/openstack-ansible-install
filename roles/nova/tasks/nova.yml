@@ -1,0 +1,23 @@
+---
+- name: Install nova on controller
+  apt: name={{ item }} state=present
+  with_items:
+    - nova-api
+    - nova-scheduler
+    - nova-conductor
+    - nova-consoleauth
+    - nova-novncproxy
+- name: Configure nova
+  template: src="nova.conf.j2" dest="/etc/nova/nova.conf" mode=0644
+  notify:
+    - restart nova-api
+    - restart nova-conductor
+    - restart nova-scheduler
+    - restart nova-consoleauth
+    - restart nova-novncproxy
+- name: populate nova-api database
+  command: su -s /bin/sh -c "nova-manage api_db sync" nova
+  no_log: True
+- name: populate nova database
+  command: su -s /bin/sh -c "nova-manage db sync" nova
+  no_log: True

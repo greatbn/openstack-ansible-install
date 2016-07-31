@@ -1,0 +1,17 @@
+---
+- name: Create Keystone database
+  mysql_db:
+    # login_user: "root"
+    # login_password: "{{ mysql_password_root }}"
+    name: "{{ keystone_db_name }}"
+    state: "present"
+- name: Create Keystone database user
+  mysql_user:
+    # login_user: "root"
+    # login_password: "{{ mysql_password_root }}"
+    name: "{{ keystone_db_user}}"
+    password: "{{ keystone_db_password }}"
+    priv: "{{ keystone_db_name }}.*:ALL"
+    state: "present"
+    host: "{{ item }}"
+  with_items: "{{hosts}}"

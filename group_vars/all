@@ -16,7 +16,7 @@ mysql_password_root: saphi
 # configure network for controller
 
 controller_address: "{% if groups['controller']|length > 1 %}{{ virtual_ip_for_ha }}{% else %}{{ hostvars[groups['controller'][0]]['ansible_host']}}{% endif %}"
-external_interface_controller: eth0
+external_interface_controller: eth2
 management_interface_controller: eth1
 management_address_controller: "{{ controller_address }}"
 management_netmask_controller: 255.255.255.0
@@ -114,7 +114,7 @@ keystone_admin_project: admin
 # configure hypervisor
 virt_type: qemu
 
-# configure tunnel GRE 
+# configure tunnel GRE
 min_id_tunnel: 100
 max_id_tunnel: 300
 bridge_external_name: br-ex

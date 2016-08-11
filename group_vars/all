@@ -20,6 +20,7 @@ external_interface_controller: eth2
 management_interface_controller: eth1
 management_address_controller: "{{ controller_address }}"
 management_netmask_controller: 255.255.255.0
+
 external_address_controller: 192.168.21.111
 external_netmask_controller: 255.255.255.0
 external_gateway_controller: 192.168.21.1

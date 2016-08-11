@@ -25,6 +25,8 @@
   template: src="openvswitch_agent.ini.j2" dest="/etc/neutron/plugins/ml2/openvswitch_agent.ini" mode=0644
   notify:
     - restart neutron-openvswitch-agent
+- name: Copy dnsmasq config
+  copy: src="dnsmasq-neutron.conf" dest="/etc/neutron/dnsmasq-neutron.conf" mode=0644
 - name: Configure dhcp
   template: src="dhcp_agent.ini.j2" dest="/etc/neutron/dhcp_agent.ini" mode=0644
   notify:

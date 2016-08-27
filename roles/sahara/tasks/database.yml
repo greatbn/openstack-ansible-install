@@ -1,0 +1,13 @@
+---
+- name: Create sahara database
+  mysql_db:
+    name: "{{ sahara_db_name }}"
+    state: "present"
+- name: Create sahara user
+  mysql_user:
+    name: "{{ sahara_db_user}}"
+    password: "{{ sahara_db_password }}"
+    priv: "{{ sahara_db_name }}.*:ALL"
+    state: "present"
+    host: "{{ item }}"
+  with_items: '{{ hosts }}'

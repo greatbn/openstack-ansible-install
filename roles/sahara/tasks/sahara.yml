@@ -1,0 +1,16 @@
+---
+- name: Install sahara service
+  apt: name=sahara state=present
+  tags:
+    - install_sahara
+- name: Configure sahara
+  template: src="sahara.conf.j2" dest="/etc/sahara/sahara.conf" mode=0644
+  notify:
+    - restart sahara service
+  tags:
+    - configure_sahara
+- name: Populate database sahara
+  command: su -s /bin/sh -c "sahara-db-manage --config-file /etc/sahara/sahara.conf upgrade head" sahara
+  no_log: True
+  tags:
+    - sync_db_sahara

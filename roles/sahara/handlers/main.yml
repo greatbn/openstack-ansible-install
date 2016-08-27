@@ -1,0 +1,6 @@
+---
+- name: restart sahara service
+  service: name={{ item }} state=restarted
+  with_items:
+    - sahara-api
+    - sahara-engine

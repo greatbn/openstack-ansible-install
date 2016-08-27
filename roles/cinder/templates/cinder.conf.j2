@@ -1,0 +1,34 @@
+[DEFAULT]
+rpc_backend = rabbit
+auth_strategy = keystone
+my_ip = {{ ansible_host }}
+enabled_backends = {{cinder_volume_backend_name}}
+glance_api_servers = http://{{controller_address}}:9292
+
+[database]
+connection = mysql+pymysql://{{ cinder_db_user }}:{{ cinder_db_password }}@{{ controller_address }}/{{ cinder_db_name }}
+
+[oslo_messaging_rabbit]
+rabbit_host = {{ controller_address }}
+rabbit_userid = {{ rabbitmq_userid }}
+rabbit_password = {{ rabbitmq_password }}
+
+[keystone_authtoken]
+auth_uri = http://{{ controller_address}}:5000
+auth_url = http://{{ controller_address}}:35357
+memcached_servers = {{ controller_address}}:11211
+auth_type = password
+project_domain_name = {{ user_domain_name }}
+user_domain_name = {{ user_domain_name}}
+project_name = {{ nova_service_project }}
+username = {{ heat_service_user }}
+password = {{ heat_service_password }}
+
+[oslo_concurrency]
+lock_path = /var/lib/cinder/tmp
+
+[{{cinder_volume_backend_name}}]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_group = {{ cinder_volume_group }}
+iscsi_protocol = iscsi
+iscsi_helper = tgtadm

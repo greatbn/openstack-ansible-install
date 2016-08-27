@@ -11,4 +11,4 @@
   poll: 0
 - name: Wait for reboot ok
   sudo: false
-  local_action: wait_for host={{ ansible_host }} state=started
+  local_action: wait_for host={{ ansible_host }} port=22 state=started

@@ -1,0 +1,128 @@
+---
+- name: Create heat user
+  keystone:
+    command: "ensure_user"
+    user_name: "{{ heat_service_user }}"
+    password: "{{ heat_service_password }}"
+    domain_name: "{{ user_domain_name }}"
+    project_name: "{{ heat_service_project }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: add role for heat
+  keystone:
+    command: "ensure_user_role"
+    user_name: "{{ heat_service_user }}"
+    project_name: "{{ heat_service_project }}"
+    role_name: "admin"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: create heat service
+  keystone:
+    command: "ensure_service"
+    service_name: "{{ heat_service_name }}"
+    service_type: "{{ heat_service_type }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: create service heat cloudformation
+  keystone:
+    command: "ensure_service"
+    service_name: "{{ heat-cfn_service_name }}"
+    service_type: "{{ heat-cfn_service_type }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: create orchestration service's endpoints
+  keystone:
+    command: "ensure_endpoint"
+    region_name: "{{ heat_service_region }}"
+    service_name: "{{ heat_service_name }}"
+    service_type: "{{ heat_service_type }}"
+    endpoint_list:
+      - url: "http://{{ controller_address }}:8004/v1/%(tenant_id)s"
+        interface: "public"
+      - url: "http://{{ controller_address }}:8004/v1/%(tenant_id)s"
+        interface: "admin"
+      - url: "http://{{ controller_address }}:8004/v1/%(tenant_id)s"
+        interface: "internal"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: create cloudformation service's endpoints
+  keystone:
+    command: "ensure_endpoint"
+    region_name: "{{ heat-cfn_service_region }}"
+    service_name: "{{ heat-cfn_service_name }}"
+    service_type: "{{ heat-cfn_service_type }}"
+    endpoint_list:
+      - url: "http://{{ controller_address }}:8000/v1"
+        interface: "public"
+      - url: "http://{{ controller_address }}:8000/v1"
+        interface: "admin"
+      - url: "http://{{ controller_address }}:8000/v1"
+        interface: "internal"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: Create heat domain
+  keystone:
+    command: "ensure_domain"
+    domain_name: {{ heat_domain_name }}
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: Create heat admin domain
+  keystone:
+    command: "ensure_user"
+    user_name: "{{ heat_domain_admin_username }}"
+    password: "{{ heat_domain_admin_password }}"
+    domain_name: "{{ heat_domain_name }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: add role for heat_domain_admin
+  keystone:
+    command: "ensure_user_role"
+    user_name: "{{ heat_domain_admin_username }}"
+    domain_name: "{{ heat_domain_name }}"
+    role_name: "admin"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: Create heat_stack_owner role
+  keystone:
+    command: "ensure_role"
+    role_name: "{{ heat_stack_owner_role_name }}"
+- name: Create heat_stack_user role
+  keystone:
+    command: "ensure_role"
+    role_name: "{{ heat_stack_user_role_name }}"

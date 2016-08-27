@@ -1,0 +1,14 @@
+---
+- name: Íntall cinder service on controller
+  apt: name="{{ item }}" state=present
+  with_items:
+    - cinder-api
+    - cinder-scheduler
+    - cinder-volunme
+- name: configure cinder
+  template: src="cinder.conf.j2" dest="/etc/cinder/cinder.conf"
+  notify:
+    - restart cinder service
+- name: Populate Database
+  command: su -s /bin/sh -c "cinder-manage db sync" cinder
+  no_log: True

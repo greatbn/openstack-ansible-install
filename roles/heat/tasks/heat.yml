@@ -1,0 +1,14 @@
+---
+- name: Install heat-api and heat-engine
+  apt: name={{ itemt }} state=present
+  with_items:
+    - heat-api
+    - heat-engine
+    - heat-api-cfn
+- name: Configure Heat
+  template: src="heat.conf.j2" dest="/etc/heat/heat.conf" mode=0644
+  notify:
+    - restart heat service
+- name: populate nova-api database
+  command: su -s /bin/sh -c "heat-manage db_sync" heat
+  no_log: True

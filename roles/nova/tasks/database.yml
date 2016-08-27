@@ -1,14 +1,10 @@
 ---
 - name: Create nova database
   mysql_db:
-    # login_user: "root"
-    # login_password: "{{ mysql_password_root }}"
     name: "{{ nova_db_name }}"
     state: "present"
 - name: Create nova database user
   mysql_user:
-    # login_user: "root"
-    # login_password: "{{ mysql_password_root }}"
     name: "{{ nova_db_user}}"
     password: "{{ nova_db_password }}"
     priv: "{{ nova_db_name }}.*:ALL"
@@ -17,14 +13,10 @@
   with_items: '{{hosts}}'
 - name: Create nova-api database
   mysql_db:
-    # login_user: "root"
-    # login_password: "{{ mysql_password_root }}"
     name: "{{ nova_api_db_name }}"
     state: "present"
 - name: Create nova_api database user
   mysql_user:
-    # login_user: "root"
-    # login_password: "{{ mysql_password_root }}"
     name: "{{ nova_api_db_user}}"
     password: "{{ nova_api_db_password }}"
     priv: "{{ nova_api_db_name }}.*:ALL"

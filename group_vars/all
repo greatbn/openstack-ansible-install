@@ -1,6 +1,6 @@
 ---
 
-virtual_ip_for_ha: 192.168.21.111
+virtual_ip_for_ha: 172.16.255.130
 
 # choose version of openstack
 openstack_version: mitaka
@@ -16,14 +16,14 @@ mysql_password_root: saphi
 # configure network for controller
 
 controller_address: "{% if groups['controller']|length > 1 %}{{ virtual_ip_for_ha }}{% else %}{{ hostvars[groups['controller'][0]]['ansible_host']}}{% endif %}"
-external_interface_controller: eth2
-management_interface_controller: eth1
+external_interface_controller: eth1
+management_interface_controller: eth0
 management_address_controller: "{{ controller_address }}"
 management_netmask_controller: 255.255.255.0
 
-external_address_controller: 192.168.21.111
+external_address_controller: 172.16.255.130
 external_netmask_controller: 255.255.255.0
-external_gateway_controller: 192.168.21.1
+external_gateway_controller: 172.16.255.2
 
 # configure network for compute host
 compute_address: "{{ ansible_host }}"
@@ -93,9 +93,48 @@ cinder_db_password: saphi
 cinder_service_user: cinder
 cinder_service_password: saphi
 cinder_service_project: service
-cinder_service_name: cinder
-cinder_service_type: volume
+cinderv1_service_name: cinder
+cinderv1_service_type: volume
+
+cinderv2_service_name: cinderv2
+cinderv2_service_type: volumev2
+
 cinder_service_region: RegionOne
+
+#configure heat db
+cinder_db_name: cinder
+cinder_db_user: cinder
+cinder_db_password: saphi
+
+#configure heat service
+heat_service_user: heat
+heat_service_password: saphi
+heat_service_project: service
+heat_service_name: heat
+heat_service_type: orchestration
+heat_service_region: RegionOne
+
+heat-cfn_service_name: heat-cfn
+heat-cfn_service_type: cloudformation
+heat-cfn_service_region: RegionOne
+
+heat_domain_admin_username: heat_domain_admin
+heat_domain_admin_password: saphi
+heat_domain_name: heat
+heat_stack_owner_role_name: heat_stack_owner
+
+#configure sahara db
+sahara_db_name: sahara
+sahara_db_user: sahara
+sahara_db_password: saphi
+
+#configure sahara service
+sahara_service_user: sahara
+sahara_service_password: saphi
+sahara_service_project: service
+sahara_service_name: sahara
+sahara_service_type: data-processing
+sahara_service_region: RegionOne
 
 # configure project name for services
 service_project_name: service

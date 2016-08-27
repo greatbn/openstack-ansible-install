@@ -1,0 +1,56 @@
+---
+- name: Create sahara user
+  keystone:
+    command: "ensure_user"
+    user_name: "{{ sahara_service_user }}"
+    password: "{{ sahara_service_password }}"
+    domain_name: "{{ user_domain_name }}"
+    project_name: "{{ sahara_service_project }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: add role for sahara
+  keystone:
+    command: "ensure_user_role"
+    user_name: "{{ sahara_service_user }}"
+    project_name: "{{ sahara_service_project }}"
+    role_name: "admin"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: create sahara service
+  keystone:
+    command: "ensure_service"
+    service_name: "{{ sahara_service_name }}"
+    service_type: "{{ sahara_service_type }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
+- name: create data_processing service's endpoints
+  keystone:
+    command: "ensure_endpoint"
+    region_name: "{{ sahara_service_region }}"
+    service_name: "{{ sahara_service_name }}"
+    service_type: "{{ sahara_service_type }}"
+    endpoint_list:
+      - url: "http://{{ controller_address }}:8386/v1.1/%(tenant_id)s"
+        interface: "public"
+      - url: "http://{{ controller_address }}:8386/v1.1/%(tenant_id)s"
+        interface: "admin"
+      - url: "http://{{ controller_address }}:8386/v1.1/%(tenant_id)s"
+        interface: "internal"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"

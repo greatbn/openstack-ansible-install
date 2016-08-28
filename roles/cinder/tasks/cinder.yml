@@ -4,7 +4,7 @@
   with_items:
     - cinder-api
     - cinder-scheduler
-    - cinder-volunme
+    - cinder-volume
 - name: configure cinder
   template: src="cinder.conf.j2" dest="/etc/cinder/cinder.conf"
   notify:

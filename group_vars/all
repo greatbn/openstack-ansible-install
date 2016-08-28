@@ -102,9 +102,9 @@ cinderv2_service_type: volumev2
 cinder_service_region: RegionOne
 
 #configure heat db
-cinder_db_name: cinder
-cinder_db_user: cinder
-cinder_db_password: saphi
+heat_db_name: cinder
+heat_db_user: cinder
+heat_db_password: saphi
 
 #configure heat service
 heat_service_user: heat
@@ -114,15 +114,15 @@ heat_service_name: heat
 heat_service_type: orchestration
 heat_service_region: RegionOne
 
-heat-cfn_service_name: heat-cfn
-heat-cfn_service_type: cloudformation
-heat-cfn_service_region: RegionOne
+heat_cfn_service_name: heat-cfn
+heat_cfn_service_type: cloudformation
+heat_cfn_service_region: RegionOne
 
 heat_domain_admin_username: heat_domain_admin
 heat_domain_admin_password: saphi
 heat_domain_name: heat
 heat_stack_owner_role_name: heat_stack_owner
-
+heat_stack_user_role_name: heat_stack_user
 #configure sahara db
 sahara_db_name: sahara
 sahara_db_user: sahara
@@ -158,3 +158,7 @@ virt_type: qemu
 min_id_tunnel: 100
 max_id_tunnel: 300
 bridge_external_name: br-ex
+
+#Configure cinder backend
+cinder_volume_backend_name: lvm
+cinder_volume_group: cinder-volumes

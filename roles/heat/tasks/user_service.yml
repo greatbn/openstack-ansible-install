@@ -38,8 +38,8 @@
 - name: create service heat cloudformation
   keystone:
     command: "ensure_service"
-    service_name: "{{ heat-cfn_service_name }}"
-    service_type: "{{ heat-cfn_service_type }}"
+    service_name: "{{ heat_cfn_service_name }}"
+    service_type: "{{ heat_cfn_service_type }}"
     login_user: "{{ keystone_admin_user }}"
     login_user_domain_name: "{{ user_domain_name }}"
     login_project_name: "{{ keystone_admin_project }}"
@@ -68,9 +68,9 @@
 - name: create cloudformation service's endpoints
   keystone:
     command: "ensure_endpoint"
-    region_name: "{{ heat-cfn_service_region }}"
-    service_name: "{{ heat-cfn_service_name }}"
-    service_type: "{{ heat-cfn_service_type }}"
+    region_name: "{{ heat_cfn_service_region }}"
+    service_name: "{{ heat_cfn_service_name }}"
+    service_type: "{{ heat_cfn_service_type }}"
     endpoint_list:
       - url: "http://{{ controller_address }}:8000/v1"
         interface: "public"
@@ -87,7 +87,7 @@
 - name: Create heat domain
   keystone:
     command: "ensure_domain"
-    domain_name: {{ heat_domain_name }}
+    domain_name: "{{ heat_domain_name }}"
     login_user: "{{ keystone_admin_user }}"
     login_user_domain_name: "{{ user_domain_name }}"
     login_project_name: "{{ keystone_admin_project }}"
@@ -122,7 +122,19 @@
   keystone:
     command: "ensure_role"
     role_name: "{{ heat_stack_owner_role_name }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"
 - name: Create heat_stack_user role
   keystone:
     command: "ensure_role"
     role_name: "{{ heat_stack_user_role_name }}"
+    login_user: "{{ keystone_admin_user }}"
+    login_user_domain_name: "{{ user_domain_name }}"
+    login_project_name: "{{ keystone_admin_project }}"
+    login_project_domain_name: "{{ user_domain_name }}"
+    login_password: "{{ keystone_admin_password }}"
+    endpoint: "http://{{ controller_address }}:35357/v3"

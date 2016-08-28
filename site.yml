@@ -3,15 +3,18 @@
   hosts: controller
   remote_user: vagrant
   roles:
-    - ops_packages
-    - ntp
-    - mysql
-    - rabbitmq
-    - keystone
-    - glance
-    - nova
-    - neutron-controller
-    - horizon
+    #- ops_packages
+    #- ntp
+    #- mysql
+    #- rabbitmq
+    #- keystone
+    #- glance
+    #- nova
+    #- neutron-controller
+    #- horizon
+    #- heat
+    - cinder
+    - sahara
   #- name: Install openstack on compute nodes
   #hosts: compute
   #remote_user: vagrant

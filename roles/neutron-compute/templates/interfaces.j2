@@ -6,5 +6,8 @@ address {{ management_address_compute }}
 netmask {{ management_netmask_compute }}
 
 auto {{ external_interface_compute  }}
-iface {{ external_interface_compute }} inet dhcp
+iface {{ external_interface_compute }} static
+address {{ external_address_compute }}
+netmask {{ external_netmask_compute }}
+gateway {{ external_gateway_compute }}
 dns-nameservers {{ dns_server_address }}

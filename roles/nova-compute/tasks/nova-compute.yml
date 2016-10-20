@@ -1,6 +1,6 @@
 ---
 - name: Install Nova-compute on compute node
-  apt: name="nova-compute" state=present
+  apt: name="nova-compute" state=present force=yes
 - name: Configure nova
   template: src="nova.conf.j2" dest="/etc/nova/nova.conf" mode=0644
   notify:

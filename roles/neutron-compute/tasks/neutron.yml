@@ -3,12 +3,8 @@
   sysctl: name="net.ipv4.conf.all.rp_filter" value=0 sysctl_set=yes
 - name: configure net filer
   sysctl: name="net.ipv4.conf.default.rp_filter" value=0 sysctl_set=yes
-- name: configure sysctl iptables
-  sysctl: name="net.bridge.bridge-nf-call-iptables" value=1 sysctl_set=yes
-- name: configure sysctl ip6tables
-  sysctl: name="net.bridge.bridge-nf-call-ip6tables" value=1 sysctl_set=yes
 - name: Install neutron component on compute node
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present force=yes
   with_items:
     - neutron-plugin-openvswitch-agent
     - python-openstackclient

@@ -5,10 +5,3 @@
   openvswitch_bridge: bridge="{{ bridge_external_name }}" state=present
 - name: add port external to bride {{ bridge_external_name }}
   openvswitch_port: bridge="{{ bridge_external_name }}" port="{{ external_interface_controller }}" state=present
-- name: Reboot controller
-  shell: reboot
-  async: 0
-  poll: 0
-- name: Wait for reboot ok
-  sudo: false
-  local_action: wait_for host={{ ansible_host }} state=started

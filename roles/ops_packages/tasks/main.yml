@@ -2,7 +2,7 @@
 - name: Install Software properties
   apt: name="software-properties-common" state="present"
 - name: Enable Openstack Package
-  apt_repository: repo="deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/{{ openstack_version }} main" state='present'
+  apt_repository: repo="deb http://ubuntu-cloud.archive.canonical.com/ubuntu xenial-updates/{{ openstack_version }} main" state='present'
 - name: Install Ubuntu cloud keyring
   apt: name="ubuntu-cloud-keyring" state="present"
 - name: Update cache
